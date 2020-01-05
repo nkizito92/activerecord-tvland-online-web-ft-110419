@@ -3,7 +3,10 @@ class Actor < ActiveRecord::Base
   has_many :shows, through: :characters
   
   def full_name 
-   "#{self.first_name} #{self.last_name}"
-   binding.pry
+    Actor.pluck(:first_name, :last_name).join(" ")
+  end 
+
+  def list_roles 
+    characters.collect {|char| "#{char.name} - #{char.show.name}"}.join(", ")
   end 
 end
